@@ -1,6 +1,6 @@
 # RED-X EXE Auto-Updater
 
-![RED-X Logo](https://via.placeholder.com/200x80?text=RED-X+LOGO)
+[RED-X Logo](image.png)
 
 **RED-X EXE Auto-Updater** is a secure console-based updater designed to download and launch the latest versions of RED-X products directly from GitHub, including private repositories. It provides a professional experience with progress tracking, network checks, and error handling.
 
