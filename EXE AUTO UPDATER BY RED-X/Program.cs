@@ -1,4 +1,11 @@
-﻿using System;
+//░░█ █▀█ █ █▄░█   █▀▄ █ █▀ █▀▀ █▀█ █▀█ █▀▄
+//█▄█ █▄█ █ █░▀█   █▄▀ █ ▄█ █▄▄ █▄█ █▀▄ █▄▀
+
+// Official RED-X CORPORATION Auto Updater
+// GitHub / Discord integration
+// https://discord.gg/f7KPc9JyeY
+
+using System;
 using System.IO;
 using System.Net;
 using System.Diagnostics;
@@ -10,25 +17,29 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
     {
         static void Main()
         {
+            // === Console setup ===
             Console.Title = "RED-X CORPORATION | AUTO UPDATER";
             try
             {
-                Console.SetWindowSize(70, 30);
-                Console.SetBufferSize(70, 30);
+                Console.SetWindowSize(70, 30); // Set console size
+                Console.SetBufferSize(70, 30); // Set buffer size
             }
-            catch { }
+            catch { } // Ignore if system does not allow resizing
 
             Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
 
+            // Show ASCII art banner
             ShowBanner();
 
+            // === Initialization sequence ===
             TypeWrite("[→] Initializing RED-X secure environment...", ConsoleColor.Gray, 20);
             Thread.Sleep(200);
             TypeWrite("[→] Performing integrity checks...", ConsoleColor.Gray, 20);
             Thread.Sleep(200);
-            CheckNetwork();
+            CheckNetwork(); // Verify internet connection
 
+            // === Product selection menu ===
             Console.WriteLine();
             TypeWrite("[+] SELECT YOUR PRODUCT", ConsoleColor.Cyan, 10);
             Console.WriteLine();
@@ -41,19 +52,20 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
             string productName = null;
             string url = null;
 
+            // === Assign product based on choice ===
             switch (choice)
             {
                 case "1":
                     productName = "RED-X ELITE.exe";
-                    url = "https://raw.githubusercontent.com/REDX-CORPORATION/EXE-AUTO-UPDATER/main/RED-X/ELITE/RED-X%20ELITE.exe";
+                    url = "https://raw.githubusercontent.com/REDX-CORPORATION/"; // TODO: Add GitHub raw link
                     break;
                 case "2":
                     productName = "RED-X PRIME.exe";
-                    url = "https://raw.githubusercontent.com/REDX-CORPORATION/EXE-AUTO-UPDATER/main/RED-X/PRIME/RED-X%20PRIME.exe";
+                    url = "https://raw.githubusercontent.com/REDX-CORPORATION/"; // TODO: Add GitHub raw link
                     break;
                 case "3":
                     productName = "RED-X PREMIUM.exe";
-                    url = "https://raw.githubusercontent.com/REDX-CORPORATION/EXE-AUTO-UPDATER/main/RED-X/PREMIUM/RED-X%20PREMIUM.exe";
+                    url = "https://raw.githubusercontent.com/REDX-CORPORATION/"; // TODO: Add GitHub raw link
                     break;
                 default:
                     TypeWrite("[x] Invalid selection. Exiting...", ConsoleColor.Red, 10);
@@ -61,14 +73,21 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
                     return;
             }
 
+            // === Download process ===
             Console.WriteLine();
             TypeWrite($"[↓] Updating {productName}...", ConsoleColor.Cyan, 10);
 
-            string savePath = Path.Combine(Path.GetTempPath(), productName);
+            string savePath = Path.Combine(Path.GetTempPath(), productName); // Save in temp folder
 
-            // Your GitHub PAT here
-            string githubPAT = "ghp_xxxxxxxxxx";
+            // ⚠️ Insert your GitHub Personal Access Token here
+            
+//─█▀▀█ ░█▀▀▄ ░█▀▀▄ 　 ░█▀▀█ ▀█▀ ▀▀█▀▀ ░█─░█ ░█─░█ ░█▀▀█ 　 ░█▀▀█ ─█▀▀█ ▀▀█▀▀ 　 ░█─░█ ░█▀▀▀ ░█▀▀█ ░█▀▀▀ 
+//░█▄▄█ ░█─░█ ░█─░█ 　 ░█─▄▄ ░█─ ─░█── ░█▀▀█ ░█─░█ ░█▀▀▄ 　 ░█▄▄█ ░█▄▄█ ─░█── 　 ░█▀▀█ ░█▀▀▀ ░█▄▄▀ ░█▀▀▀ 
+//░█─░█ ░█▄▄▀ ░█▄▄▀ 　 ░█▄▄█ ▄█▄ ─░█── ░█─░█ ─▀▄▄▀ ░█▄▄█ 　 ░█─── ░█─░█ ─░█── 　 ░█─░█ ░█▄▄▄ ░█─░█ ░█▄▄▄
+           
+            string githubPAT = "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN";
 
+            // Download with progress tracking
             bool ok = DownloadWithProgress(url, savePath, productName, githubPAT);
 
             if (!ok)
@@ -78,6 +97,7 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
                 return;
             }
 
+            // === Launch the updated program ===
             TypeWrite($"[✔] Update complete. Launching {productName}...", ConsoleColor.Green, 10);
             Thread.Sleep(700);
 
@@ -91,15 +111,16 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
                 Thread.Sleep(1200);
             }
 
-            Environment.Exit(0);
+            Environment.Exit(0); // Exit updater
         }
 
+        // === Network check ===
         static void CheckNetwork()
         {
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.google.com");
-                request.Timeout = 5000;
+                request.Timeout = 5000; // 5s timeout
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
@@ -114,6 +135,7 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
             }
         }
 
+        // === File download with progress bar ===
         static bool DownloadWithProgress(string url, string savePath, string displayName, string githubPAT)
         {
             try
@@ -121,13 +143,13 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.Method = "GET";
                 req.UserAgent = "RED-X-Updater/1.0";
-                req.Headers.Add("Authorization", "token " + githubPAT);
+                req.Headers.Add("Authorization", "token " + githubPAT); // GitHub PAT authorization
 
                 using (var res = (HttpWebResponse)req.GetResponse())
                 using (var rs = res.GetResponseStream())
                 using (var fs = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
-                    long total = res.ContentLength;
+                    long total = res.ContentLength; // File size
 
                     Console.WriteLine();
                     TypeWrite("[i] Target: " + displayName, ConsoleColor.Gray, 5);
@@ -138,7 +160,7 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
                     }
 
                     Console.WriteLine();
-                    int progressRow = Console.CursorTop;
+                    int progressRow = Console.CursorTop; // Row to show progress
                     Console.WriteLine();
 
                     byte[] buffer = new byte[8192];
@@ -146,6 +168,7 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
                     int read;
                     Stopwatch sw = Stopwatch.StartNew();
 
+                    // === Read data chunks and update progress ===
                     while ((read = rs.Read(buffer, 0, buffer.Length)) > 0)
                     {
                         fs.Write(buffer, 0, read);
@@ -153,6 +176,7 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
                         DrawProgressLine(progressRow, readTotal, total, sw);
                     }
 
+                    // Final progress line
                     DrawProgressLine(progressRow, total > 0 ? total : readTotal, total, sw);
                     sw.Stop();
                 }
@@ -166,22 +190,28 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
             }
         }
 
+        // === Draw download progress bar ===
         static void DrawProgressLine(int row, long current, long total, Stopwatch sw)
         {
             if (sw.Elapsed.TotalSeconds <= 0) sw.Restart();
 
             double pct = (total > 0) ? (current * 100.0 / total) : 0.0;
             double bytesPerSec = current / Math.Max(0.001, sw.Elapsed.TotalSeconds);
+
+            // Format speed display
             string speed = (bytesPerSec >= 1024 * 1024)
                 ? (bytesPerSec / 1024d / 1024d).ToString("0.00") + " MB/s"
                 : (bytesPerSec / 1024d).ToString("0.0") + " KB/s";
 
+            // Estimate time remaining
             double remainSec = (total > 0 && bytesPerSec > 0) ? (total - current) / bytesPerSec : 0;
             string eta = (total > 0 && bytesPerSec > 0) ? FormatETA(remainSec) : "--:--";
 
+            // Format MB progress
             string currentMb = (current / 1024d / 1024d).ToString("0.00");
             string totalMb = (total > 0) ? (total / 1024d / 1024d).ToString("0.00") : "??";
 
+            // Progress bar visual
             int barWidth = 28;
             int fill = (int)((pct / 100.0) * barWidth);
             fill = Math.Max(0, Math.Min(barWidth, fill));
@@ -190,10 +220,12 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
 
             string line = $"INIT {pct:0}% {bar} | {speed} | ETA {eta} | {currentMb}/{totalMb} MB";
 
+            // Console width handling
             int width = Console.WindowWidth > 0 ? Console.WindowWidth : 80;
             if (line.Length > width) line = line.Substring(0, width);
             else if (line.Length < width) line += new string(' ', width - line.Length);
 
+            // Write line at correct row
             try
             {
                 Console.SetCursorPosition(0, row);
@@ -206,6 +238,7 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
             try { Console.SetCursorPosition(0, row + 1); } catch { }
         }
 
+        // === Format time (ETA) into MM:SS ===
         static string FormatETA(double seconds)
         {
             if (seconds < 0) seconds = 0;
@@ -214,6 +247,7 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
             return m.ToString("00") + ":" + s.ToString("00");
         }
 
+        // === Print ASCII banner ===
         static void ShowBanner()
         {
             string[] banner = new string[]
@@ -233,18 +267,20 @@ namespace EXE_AUTO_UPDATER_BY_RED_X
             Console.WriteLine();
         }
 
+        // === Animated typing effect ===
         static void TypeWrite(string message, ConsoleColor color, int delay)
         {
             Console.ForegroundColor = color;
             foreach (char c in message)
             {
                 Console.Write(c);
-                Thread.Sleep(delay);
+                Thread.Sleep(delay); // Delay between chars
             }
             Console.ResetColor();
             Console.WriteLine();
         }
 
+        // === Centered text printing ===
         static void CenterWrite(string text, ConsoleColor color)
         {
             int width = Console.WindowWidth > 0 ? Console.WindowWidth : 80;
