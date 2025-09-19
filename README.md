@@ -8,7 +8,7 @@
 
 ## Features
 
-- ✅ Supports multiple products:  
+- ✅ Supports multiple products:  (for eg)
   - RED-X ELITE  
   - RED-X PRIME  
   - RED-X PREMIUM
@@ -52,6 +52,23 @@
 
 ---
 
+## 🏆 Credits
+
+- 💻 Fully developed by **Mohtasim Billah Jitu**
+- ❤️ If you share or use this project, please give proper credit.
+
+---
+
+## 🌐 Connect With Us
+
+- **Discord:** [Join the RED-X Server](https://discord.gg/f7KPc9JyeY)  
+- **Telegram:** [Follow our Channel](https://t.me/+OglBPVcrngY1OGQ9)  
+- **Instagram:** @mohtasimjitu  
+
+Built with ❤️ by **RED-X CORPORATION**  
+© 2025 RED-X CORPORATION. All rights reserved.
 ## License
+
+---
 
 This project is **proprietary** to RED-X CORPORATION. All rights reserved. Unauthorized distribution is prohibited.
